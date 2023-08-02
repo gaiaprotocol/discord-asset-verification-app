@@ -1,1 +1,1 @@
-# discord-verification-app
+# discord-asset-verification-app
