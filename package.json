@@ -1,8 +1,9 @@
 {
     "scripts": {
-        "start": "nodemon --exec 'node generate.js' --watch './dist/**/*.js'",
         "webpack-dev": "webpack --mode development --watch --config webpack.config.dev.cjs",
-        "webpack-prod": "webpack --mode production --config webpack.config.prod.cjs"
+        "webpack-prod": "webpack --mode production --config webpack.config.prod.cjs",
+        "predeploy": "yarn webpack-prod",
+        "deploy": "gh-pages -d public"
     },
     "type": "module",
     "dependencies": {
@@ -13,6 +14,7 @@
         "buffer": "^6.0.3",
         "crypto-browserify": "^3.12.0",
         "css-loader": "^5.2.1",
+        "gh-pages": "^5.0.0",
         "http-browserify": "^1.7.0",
         "https-browserify": "^1.0.0",
         "less": "^4.1.1",

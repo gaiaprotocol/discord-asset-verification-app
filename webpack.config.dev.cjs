@@ -4,8 +4,8 @@ const { ProvidePlugin } = require('webpack');
 
 module.exports = {
     entry: {
-        'bundle': './src/main.ts',
-        __less: './docs/style/main.less',
+        'bundle': './src/dev.ts',
+        __less: './public/style/main.less',
     },
     module: {
         rules: [
@@ -53,7 +53,7 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'docs'),
+        path: path.resolve(__dirname, 'public'),
     },
     plugins: [
         new MiniCssExtractPlugin({

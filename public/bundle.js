@@ -10,13 +10,33 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/main.ts":
-/*!*********************!*\
-  !*** ./src/main.ts ***!
-  \*********************/
+/***/ "./src/Config.ts":
+/*!***********************!*\
+  !*** ./src/Config.ts ***!
+  \***********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var common_dapp_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! common-dapp-module */ \"../common-dapp-module/lib/index.js\");\n/* harmony import */ var _view_Home_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view/Home.js */ \"./src/view/Home.ts\");\n/* harmony import */ var _view_Layout_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./view/Layout.js */ \"./src/view/Layout.ts\");\n\n\n\n(async () => {\n    if (sessionStorage.__spa_path) {\n        common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.Router.goNoHistory(sessionStorage.__spa_path);\n        sessionStorage.removeItem(\"__spa_path\");\n    }\n    await common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.msg.loadYAMLs({\n        en: [\"/locales/en.yml\"],\n    });\n    common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.Router.route(\"**\", _view_Layout_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"]);\n    common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.Router.route(\"\", _view_Home_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]);\n})();\n\n\n//# sourceURL=webpack:///./src/main.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Config)\n/* harmony export */ });\nclass Config {\n    static devMode = false;\n}\n\n\n//# sourceURL=webpack:///./src/Config.ts?");
+
+/***/ }),
+
+/***/ "./src/dev.ts":
+/*!********************!*\
+  !*** ./src/dev.ts ***!
+  \********************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {\n__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Config_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Config.js */ \"./src/Config.ts\");\n/* harmony import */ var _install_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./install.js */ \"./src/install.ts\");\n\n\n_Config_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"].devMode = true;\nawait (0,_install_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])();\n\n__webpack_async_result__();\n} catch(e) { __webpack_async_result__(e); } }, 1);\n\n//# sourceURL=webpack:///./src/dev.ts?");
+
+/***/ }),
+
+/***/ "./src/install.ts":
+/*!************************!*\
+  !*** ./src/install.ts ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ install)\n/* harmony export */ });\n/* harmony import */ var common_dapp_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! common-dapp-module */ \"../common-dapp-module/lib/index.js\");\n/* harmony import */ var _view_Home_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view/Home.js */ \"./src/view/Home.ts\");\n/* harmony import */ var _view_Layout_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./view/Layout.js */ \"./src/view/Layout.ts\");\n\n\n\nasync function install() {\n    if (sessionStorage.__spa_path) {\n        common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.Router.goNoHistory(sessionStorage.__spa_path);\n        sessionStorage.removeItem(\"__spa_path\");\n    }\n    await common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.msg.loadYAMLs({\n        en: [\"/locales/en.yml\"],\n    });\n    common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.Router.route(\"**\", _view_Layout_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"]);\n    common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.Router.route(\"\", _view_Home_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]);\n}\n\n\n//# sourceURL=webpack:///./src/install.ts?");
 
 /***/ }),
 
@@ -26,7 +46,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var comm
   \**************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Home)\n/* harmony export */ });\n/* harmony import */ var common_dapp_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! common-dapp-module */ \"../common-dapp-module/lib/index.js\");\n/* harmony import */ var _Layout_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Layout.js */ \"./src/view/Layout.ts\");\n\n\nclass Home extends common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.View {\n    container;\n    constructor() {\n        super();\n        _Layout_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"].append(this.container = (0,common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.el)(\".home-view\", \"hello\"));\n    }\n    close() {\n        this.container.delete();\n        super.close();\n    }\n}\n\n\n//# sourceURL=webpack:///./src/view/Home.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Home)\n/* harmony export */ });\n/* harmony import */ var common_dapp_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! common-dapp-module */ \"../common-dapp-module/lib/index.js\");\n/* harmony import */ var _Layout_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Layout.js */ \"./src/view/Layout.ts\");\n/* harmony import */ var _Config_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Config.js */ \"./src/Config.ts\");\n\n\n\nclass Home extends common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.View {\n    container;\n    constructor() {\n        super();\n        _Layout_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"].append(this.container = (0,common_dapp_module__WEBPACK_IMPORTED_MODULE_0__.el)(\".home-view\", String(_Config_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"].devMode)));\n    }\n    close() {\n        this.container.delete();\n        super.close();\n    }\n}\n\n\n//# sourceURL=webpack:///./src/view/Home.ts?");
 
 /***/ }),
 
@@ -257,6 +277,75 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/async module */
+/******/ 	(() => {
+/******/ 		var webpackQueues = typeof Symbol === "function" ? Symbol("webpack queues") : "__webpack_queues__";
+/******/ 		var webpackExports = typeof Symbol === "function" ? Symbol("webpack exports") : "__webpack_exports__";
+/******/ 		var webpackError = typeof Symbol === "function" ? Symbol("webpack error") : "__webpack_error__";
+/******/ 		var resolveQueue = (queue) => {
+/******/ 			if(queue && queue.d < 1) {
+/******/ 				queue.d = 1;
+/******/ 				queue.forEach((fn) => (fn.r--));
+/******/ 				queue.forEach((fn) => (fn.r-- ? fn.r++ : fn()));
+/******/ 			}
+/******/ 		}
+/******/ 		var wrapDeps = (deps) => (deps.map((dep) => {
+/******/ 			if(dep !== null && typeof dep === "object") {
+/******/ 				if(dep[webpackQueues]) return dep;
+/******/ 				if(dep.then) {
+/******/ 					var queue = [];
+/******/ 					queue.d = 0;
+/******/ 					dep.then((r) => {
+/******/ 						obj[webpackExports] = r;
+/******/ 						resolveQueue(queue);
+/******/ 					}, (e) => {
+/******/ 						obj[webpackError] = e;
+/******/ 						resolveQueue(queue);
+/******/ 					});
+/******/ 					var obj = {};
+/******/ 					obj[webpackQueues] = (fn) => (fn(queue));
+/******/ 					return obj;
+/******/ 				}
+/******/ 			}
+/******/ 			var ret = {};
+/******/ 			ret[webpackQueues] = x => {};
+/******/ 			ret[webpackExports] = dep;
+/******/ 			return ret;
+/******/ 		}));
+/******/ 		__webpack_require__.a = (module, body, hasAwait) => {
+/******/ 			var queue;
+/******/ 			hasAwait && ((queue = []).d = -1);
+/******/ 			var depQueues = new Set();
+/******/ 			var exports = module.exports;
+/******/ 			var currentDeps;
+/******/ 			var outerResolve;
+/******/ 			var reject;
+/******/ 			var promise = new Promise((resolve, rej) => {
+/******/ 				reject = rej;
+/******/ 				outerResolve = resolve;
+/******/ 			});
+/******/ 			promise[webpackExports] = exports;
+/******/ 			promise[webpackQueues] = (fn) => (queue && fn(queue), depQueues.forEach(fn), promise["catch"](x => {}));
+/******/ 			module.exports = promise;
+/******/ 			body((deps) => {
+/******/ 				currentDeps = wrapDeps(deps);
+/******/ 				var fn;
+/******/ 				var getResult = () => (currentDeps.map((d) => {
+/******/ 					if(d[webpackError]) throw d[webpackError];
+/******/ 					return d[webpackExports];
+/******/ 				}))
+/******/ 				var promise = new Promise((resolve) => {
+/******/ 					fn = () => (resolve(getResult));
+/******/ 					fn.r = 0;
+/******/ 					var fnQueue = (q) => (q !== queue && !depQueues.has(q) && (depQueues.add(q), q && !q.d && (fn.r++, q.push(fn))));
+/******/ 					currentDeps.map((dep) => (dep[webpackQueues](fnQueue)));
+/******/ 				});
+/******/ 				return fn.r ? promise : getResult();
+/******/ 			}, (err) => ((err ? reject(promise[webpackError] = err) : outerResolve(exports)), resolveQueue(queue)));
+/******/ 			queue && queue.d < 0 && (queue.d = 0);
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -290,7 +379,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/main.ts");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/dev.ts");
 /******/ 	
 /******/ })()
 ;
