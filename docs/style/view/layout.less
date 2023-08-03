@@ -1,0 +1,56 @@
+.layout {
+    background-color: #313338;
+
+    >.topbar {
+        >.container {
+            width  : 920px;
+            padding: 0 20px;
+            margin : auto;
+
+            @media @tablet-and-phone {
+                width: 100%;
+            }
+
+            >.logo {
+                >h1 {
+                    display    : flex;
+                    align-items: center;
+                    gap        : 12px;
+                    font-family: TrajanPro;
+                    font-size  : 24px;
+                    font-weight: bold;
+
+                    @media @phone {
+                        font-size: 20px;
+                    }
+
+                    >span {
+                        padding-top: 7px;
+                    }
+                }
+            }
+        }
+    }
+
+    >main {
+        width  : 920px;
+        padding: 0 20px;
+        margin : auto;
+
+        @media @tablet-and-phone {
+            width: 100%;
+        }
+    }
+
+    >footer {
+        >.container {
+            width  : 920px;
+            padding: 40px 20px;
+            margin : auto;
+
+            @media @tablet-and-phone {
+                width: 100%;
+            }
+        }
+    }
+}

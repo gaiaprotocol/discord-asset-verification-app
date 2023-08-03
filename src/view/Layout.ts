@@ -1,4 +1,4 @@
-import { BodyNode, DomNode, ResponsiveImage, TopBar, View, el } from "common-dapp-module";
+import { BodyNode, DomNode, PageFooter, ResponsiveImage, TopBar, View, el } from "common-dapp-module";
 
 export default class Layout extends View {
 
@@ -19,13 +19,16 @@ export default class Layout extends View {
             new TopBar({
                 logo: el("h1",
                     new ResponsiveImage("img", "/images/logo.png"),
+                    "Discord Asset Verificaion",
                 ),
             }),
             this.content = el("main"),
-            el("footer",
-                "BUIDL by ",
-                el("a", "Gaia Protocol", { href: "https://gaiaprotocol.com", target: "_blank" }),
-            ),
+            new PageFooter({
+                logo: el("h1",
+                    "BUIDL by ",
+                    el("a", "Gaia Protocol", { href: "https://gaiaprotocol.com", target: "_blank" }),
+                ),
+            }),
         ));
     }
 

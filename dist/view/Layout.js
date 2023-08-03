@@ -1,4 +1,4 @@
-import { BodyNode, ResponsiveImage, TopBar, View, el } from "common-dapp-module";
+import { BodyNode, PageFooter, ResponsiveImage, TopBar, View, el } from "common-dapp-module";
 export default class Layout extends View {
     static current;
     static append(node) {
@@ -10,8 +10,10 @@ export default class Layout extends View {
         super();
         Layout.current = this;
         BodyNode.append(this.container = el(".layout", new TopBar({
-            logo: el("h1", new ResponsiveImage("img", "/images/logo.png")),
-        }), this.content = el("main"), el("footer", "BUIDL by ", el("a", "Gaia Protocol", { href: "https://gaiaprotocol.com", target: "_blank" }))));
+            logo: el("h1", new ResponsiveImage("img", "/images/logo.png"), "Discord Asset Verificaion"),
+        }), this.content = el("main"), new PageFooter({
+            logo: el("h1", "BUIDL by ", el("a", "Gaia Protocol", { href: "https://gaiaprotocol.com", target: "_blank" })),
+        })));
     }
     close() {
         this.container.delete();

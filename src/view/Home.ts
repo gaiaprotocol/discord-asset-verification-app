@@ -8,7 +8,7 @@ export default class Home extends View {
     constructor() {
         super();
         Layout.append(this.container = el(".home-view",
-            "Home",
+            "hello",
         ));
     }
 

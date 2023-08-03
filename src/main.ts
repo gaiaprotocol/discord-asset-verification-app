@@ -1,4 +1,4 @@
-import { Router } from "common-dapp-module";
+import { Router, msg } from "common-dapp-module";
 import Home from "./view/Home.js";
 import Layout from "./view/Layout.js";
 
@@ -7,6 +7,10 @@ import Layout from "./view/Layout.js";
         Router.goNoHistory(sessionStorage.__spa_path);
         sessionStorage.removeItem("__spa_path");
     }
+
+    await msg.loadYAMLs({
+        en: ["/locales/en.yml"],
+    });
 
     Router.route("**", Layout);
     Router.route("", Home);
