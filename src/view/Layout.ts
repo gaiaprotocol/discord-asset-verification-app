@@ -1,39 +1,54 @@
-import { BodyNode, DomNode, PageFooter, ResponsiveImage, TopBar, View, el } from "common-dapp-module";
+import {
+    BodyNode,
+    DomNode,
+    el,
+    PageFooter,
+    ResponsiveImage,
+    TopBar,
+    View,
+} from "common-dapp-module";
 
 export default class Layout extends View {
+  private static current: Layout;
 
-    private static current: Layout;
+  public static append(node: DomNode): void {
+    Layout.current.content.append(node);
+  }
 
-    public static append(node: DomNode): void {
-        Layout.current.content.append(node);
-    }
+  private container: DomNode;
+  private content: DomNode;
 
-    private container: DomNode;
-    private content: DomNode;
+  constructor() {
+    super();
+    Layout.current = this;
 
-    constructor() {
-        super();
-        Layout.current = this;
-
-        BodyNode.append(this.container = el(".layout",
-            new TopBar({
-                logo: el("h1",
-                    new ResponsiveImage("img", "/images/logo.png"),
-                    "Discord Asset Verificaion",
-                ),
+    BodyNode.append(
+      this.container = el(
+        ".layout",
+        new TopBar({
+          logo: el(
+            "h1",
+            new ResponsiveImage("img", "/images/logo.png"),
+            "Discord Asset Verificaion",
+          ),
+        }),
+        this.content = el("main"),
+        new PageFooter({
+          logo: el(
+            "h1",
+            "BUIDL by ",
+            el("a", "Gaia Protocol", {
+              href: "https://gaiaprotocol.com",
+              target: "_blank",
             }),
-            this.content = el("main"),
-            new PageFooter({
-                logo: el("h1",
-                    "BUIDL by ",
-                    el("a", "Gaia Protocol", { href: "https://gaiaprotocol.com", target: "_blank" }),
-                ),
-            }),
-        ));
-    }
+          ),
+        }),
+      ),
+    );
+  }
 
-    public close(): void {
-        this.container.delete();
-        super.close();
-    }
+  public close(): void {
+    this.container.delete();
+    super.close();
+  }
 }
