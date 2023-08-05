@@ -6,5 +6,6 @@ Config.discordAuthURL =
 Config.supabaseURL = "https://qlusufpskzfuzakfzyuj.supabase.co";
 Config.supabaseAnonKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsdXN1ZnBza3pmdXpha2Z6eXVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTEwNTEzNDQsImV4cCI6MjAwNjYyNzM0NH0.PU-d9F-sjJ5KPcY-zl_iXaHesb00-Y5O26c9h_7mmAs";
+Config.walletConnectProjectID = "9453dde87223ea87e86b0ec596c00d13";
 
 await install();

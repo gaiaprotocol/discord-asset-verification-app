@@ -2,6 +2,14 @@ import { Confirm, DomNode, el, Loader, msg, View } from "common-dapp-module";
 import { get } from "../_shared/edgeFunctionFetch.js";
 import Config from "../Config.js";
 import Layout from "./Layout.js";
+import {
+  EthereumClient,
+  w3mConnectors,
+  w3mProvider,
+} from "@web3modal/ethereum";
+import { Web3Modal } from "@web3modal/html";
+import { configureChains, createConfig } from "@wagmi/core";
+import { arbitrum, mainnet, polygon } from "@wagmi/core/chains";
 
 export default class Home extends View {
   private container: DomNode;
@@ -87,6 +95,24 @@ export default class Home extends View {
       "0x8033cEB86c71EbBF575fF7015FcB8F1689d90aC1",
     ];
 
+    const chains = [arbitrum, mainnet, polygon];
+
+    const { publicClient } = configureChains(chains, [
+      w3mProvider({ projectId: Config.walletConnectProjectID }),
+    ]);
+    const wagmiConfig = createConfig({
+      autoConnect: true,
+      connectors: w3mConnectors({
+        projectId: Config.walletConnectProjectID,
+        chains,
+      }),
+      publicClient,
+    });
+    const ethereumClient = new EthereumClient(wagmiConfig, chains);
+    const web3modal = new Web3Modal({
+      projectId: Config.walletConnectProjectID,
+    }, ethereumClient);
+
     const walletList = el("ul.list");
     const assetList = el("ul.list");
     const roleList = el("ul.list");
@@ -105,7 +131,9 @@ export default class Home extends View {
             ".list-wrapper",
             el("h2", msg("wallet-list-title")),
             walletList,
-            el("a.action-button", msg("add-wallet-address-button")),
+            el("a.action-button", msg("add-wallet-address-button"), {
+              click: () => web3modal.openModal(),
+            }),
           ),
           el(
             ".list-wrapper",
@@ -133,10 +161,15 @@ export default class Home extends View {
                 new Confirm({
                   title: msg("remove-wallet-address-confirm-title"),
                   message: msg("remove-wallet-address-confirm-message"),
-                  cancelTitle: msg("remove-wallet-address-confirm-cancel-button"),
-                  confirmTitle: msg("remove-wallet-address-confirm-remove-button"),
+                  cancelTitle: msg(
+                    "remove-wallet-address-confirm-cancel-button",
+                  ),
+                  confirmTitle: msg(
+                    "remove-wallet-address-confirm-remove-button",
+                  ),
                   confirmColor: "#c94543",
                 }, () => {
+                  // TODO
                 });
               },
             }),
