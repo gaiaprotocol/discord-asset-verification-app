@@ -1,13 +1,3 @@
-import { Confirm, DomNode, el, Loader, msg, View } from "common-dapp-module";
-import { get } from "../_shared/edgeFunctionFetch.js";
-import Config from "../Config.js";
-import Layout from "./Layout.js";
-import {
-  EthereumClient,
-  w3mConnectors,
-  w3mProvider,
-} from "@web3modal/ethereum";
-import { Web3Modal } from "@web3modal/html";
 import {
   configureChains,
   createConfig,
@@ -15,7 +5,27 @@ import {
   signMessage,
   watchAccount,
 } from "@wagmi/core";
+import { ethers } from "ethers";
 import { mainnet } from "@wagmi/core/chains";
+import {
+  EthereumClient,
+  w3mConnectors,
+  w3mProvider,
+} from "@web3modal/ethereum";
+import { Web3Modal } from "@web3modal/html";
+import {
+  Confirm,
+  DomNode,
+  el,
+  Loader,
+  msg,
+  StringUtil,
+  View,
+} from "common-dapp-module";
+import { get } from "../_shared/edgeFunctionFetch.js";
+import Config from "../Config.js";
+import Layout from "./Layout.js";
+import assets from "../_shared/assets.js";
 
 export default class Home extends View {
   private container: DomNode;
@@ -55,25 +65,24 @@ export default class Home extends View {
     });
 
     //this.init();
-    this.test({
-      "id": "939061865504460870",
-      "username": "yj.gaia",
-      "avatar": "4a840acf0daeff536d71b30221684376",
-      "discriminator": "0",
-      "public_flags": 4194304,
-      "flags": 4194304,
-      "banner": null,
-      "accent_color": null,
-      "global_name": "yj.gaia",
-      "avatar_decoration": null,
-      "banner_color": null,
-      "mfa_enabled": true,
-      "locale": "ko",
-      "premium_type": 2,
-      "email": "hanul@hanul.me",
-      "verified": true,
-      "wallet_addresses": [],
-    });
+
+    //test
+    this.user = {
+      id: "1234567890",
+      nickname: "Test User",
+      avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
+      walletAddresses: ["0x1234567890"],
+      assets: [{
+        chain: "ethereum",
+        address: "0xeACB1E79425236dAcd5Df3D0bd3F73e3dc6fb11e",
+        balance: "100000000000000000000",
+      }, {
+        chain: "ethereum",
+        address: "0x134590ACB661Da2B318BcdE6b39eF5cF8208E372",
+        balance: "12",
+      }],
+      roles: [{ name: "Test Role", color: 0 }],
+    };
   }
 
   private async init() {
@@ -115,8 +124,7 @@ export default class Home extends View {
   private async loadUser(accessToken: string) {
     const response = await get(`get-discord-user?access_token=${accessToken}`);
     if (response.status === 200) {
-      const user = await response.json();
-      console.log(user);
+      this.user = await response.json();
     } else {
       console.error(await response.text());
       this.showDiscordLoginButton();
@@ -131,16 +139,17 @@ export default class Home extends View {
     this.web3modal.closeModal();
   }
 
-  private test(user: any) {
-    user.wallet_addresses = [
-      "0x8033cEB86c71EbBF575fF7015FcB8F1689d90aC1",
-      "0x8033cEB86c71EbBF575fF7015FcB8F1689d90aC1",
-      "0x8033cEB86c71EbBF575fF7015FcB8F1689d90aC1",
-    ];
-
-    const walletList = el("ul.list");
-    const assetList = el("ul.list");
-    const roleList = el("ul.list");
+  private set user(user: {
+    id: string;
+    nickname: string;
+    avatar: string;
+    walletAddresses: string[];
+    assets: { chain: string; address: string; balance: string }[];
+    roles: { name: string; color: number }[];
+  }) {
+    const walletList = el("ul.wallet-list");
+    const assetList = el("ul.asset-list");
+    const roleList = el("ul.role-list");
 
     this.container.empty().append(
       el(
@@ -151,7 +160,7 @@ export default class Home extends View {
         }),
         el(
           ".container",
-          el("h1", user.username),
+          el("h1", user.nickname),
           el(
             ".list-wrapper",
             el("h2", msg("wallet-list-title")),
@@ -181,13 +190,13 @@ export default class Home extends View {
       ),
     );
 
-    if (user.wallet_addresses && user.wallet_addresses.length > 0) {
-      for (const walletAddress of user.wallet_addresses) {
+    if (user.walletAddresses && user.walletAddresses.length > 0) {
+      for (const walletAddress of user.walletAddresses) {
         walletList.append(
           el(
             "li",
             el("span.check", el("i.fas.fa-check")),
-            el("span.content", walletAddress),
+            el("span.address", walletAddress),
             el("a.remove-button", el("i.fas.fa-trash-can"), {
               click: () => {
                 new Confirm({
@@ -209,16 +218,32 @@ export default class Home extends View {
         );
       }
     } else {
-      walletList.parent?.append(
-        el("p.empty-message", msg("no-wallet-address-message")),
+      el("p.empty-message", msg("no-wallet-address-message")).appendTo(
+        walletList.parent!,
+        2,
       );
       walletList.delete();
     }
 
     if (user.assets && user.assets.length > 0) {
       for (const asset of user.assets) {
-        walletList.append(
-          el("li", asset),
+        const assetInfo = assets[`${asset.chain}-${asset.address}`];
+        assetList.append(
+          el(
+            "li",
+            el("img.icon", { src: assetInfo.icon }),
+            el("h3.name", assetInfo.name),
+            el(
+              ".balance",
+              "x" + StringUtil.numberWithCommas(
+                ethers.formatUnits(asset.balance, assetInfo.decimals ?? 0),
+              ),
+            ),
+            el("a.trade-button", msg("asset-list-trade-button"), {
+              href: assetInfo.tradeURL,
+              target: "_blank",
+            }),
+          ),
         );
       }
     } else {
@@ -230,8 +255,18 @@ export default class Home extends View {
 
     if (user.roles && user.roles.length > 0) {
       for (const role of user.roles) {
-        walletList.append(
-          el("li", role),
+        roleList.append(
+          el(
+            "li",
+            el("span.color", {
+              style: {
+                backgroundColor: `#${
+                  role.color === 0 ? "c5c9cd" : role.color.toString(16)
+                }`,
+              },
+            }),
+            role.name,
+          ),
         );
       }
     } else {

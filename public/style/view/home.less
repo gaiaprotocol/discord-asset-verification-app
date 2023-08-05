@@ -55,46 +55,110 @@
                 }
 
                 >ul {
-                    display       : flex;
-                    flex-direction: column;
-                    gap           : 8px;
-                    margin-top    : 12px;
+                    margin-top: 12px;
 
-                    >li {
-                        border       : 1px solid #595b5f;
-                        padding      : 4px 6px;
-                        border-radius: 10px;
-                        font-size    : 14px;
-                        display      : flex;
-                        align-items  : center;
-                        gap          : 4px;
+                    &.wallet-list {
+                        display       : flex;
+                        flex-direction: column;
+                        gap           : 8px;
 
-                        >.check {
-                            width           : 16px;
-                            height          : 16px;
-                            background-color: #84b060;
-                            border-radius   : 2px;
-                            display         : flex;
-                            align-items     : center;
-                            justify-content : center;
+                        >li {
+                            border       : 1px solid #595b5f;
+                            padding      : 4px 6px;
+                            border-radius: 10px;
+                            font-size    : 14px;
+                            display      : flex;
+                            align-items  : center;
+                            gap          : 4px;
+
+                            >.check {
+                                width           : 16px;
+                                height          : 16px;
+                                background-color: #84b060;
+                                border-radius   : 2px;
+                                display         : flex;
+                                align-items     : center;
+                                justify-content : center;
+                            }
+
+                            >.address {
+                                flex-grow    : 1;
+                                white-space  : nowrap;
+                                text-overflow: ellipsis;
+                                overflow     : hidden;
+                            }
+
+                            >.remove-button {
+                                width          : 16px;
+                                height         : 16px;
+                                border-radius  : 2px;
+                                display        : flex;
+                                align-items    : center;
+                                justify-content: center;
+                                color          : #df4f4a;
+                                cursor         : pointer;
+                            }
                         }
+                    }
 
-                        >.content {
-                            flex-grow    : 1;
-                            white-space  : nowrap;
-                            text-overflow: ellipsis;
-                            overflow     : hidden;
+                    &.asset-list {
+                        display              : grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        gap                  : 12px;
+
+                        >li {
+                            padding         : 10px;
+                            background-color: #1e1f22;
+                            border-radius   : 4px;
+                            font-size       : 14px;
+                            min-width       : 0;
+
+                            >.icon {
+                                border-radius: 4px;
+                            }
+
+                            >h3 {
+                                font-family: 'gg sans SemiBold', sans-serif;
+                                white-space: nowrap;
+                                overflow   : hidden;
+                            }
+
+                            >.trade-button {
+                                display         : block;
+                                background-color: #5a65ea;
+                                border-radius   : 4px;
+                                padding         : 6px 0;
+                                cursor          : pointer;
+                                font-family     : 'gg sans SemiBold', sans-serif;
+                                font-size       : 14px;
+                                margin-top      : 12px;
+                                transition      : all 100ms linear;
+                                text-align      : center;
+
+                                &:hover {
+                                    background-color: #4952bd;
+                                    box-shadow      : 0 8px 24px 0 rgba(16, 39, 112, .2);
+                                }
+                            }
                         }
+                    }
 
-                        >.remove-button {
-                            width          : 16px;
-                            height         : 16px;
-                            border-radius  : 2px;
-                            display        : flex;
-                            align-items    : center;
-                            justify-content: center;
-                            color          : #df4f4a;
-                            cursor         : pointer;
+                    &.role-list {
+                        >li {
+                            border       : 1px solid #595b5f;
+                            padding      : 4px 8px;
+                            border-radius: 10px;
+                            font-size    : 14px;
+                            display      : inline-flex;
+                            align-items  : center;
+                            gap          : 4px;
+                            margin-right : 4px;
+
+                            >.color {
+                                width        : 16px;
+                                height       : 16px;
+                                border-radius: 8px;
+                            }
                         }
                     }
                 }
