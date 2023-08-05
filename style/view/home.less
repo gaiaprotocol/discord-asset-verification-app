@@ -1,0 +1,126 @@
+.home-view {
+    padding: 20px 0;
+
+    >.discord-login-button {
+        margin-top      : 8px;
+        border-radius   : 4px;
+        height          : 44px;
+        max-width       : 420px;
+        font-size       : 14px;
+        transition      : all 200ms linear;
+        display         : flex;
+        align-items     : center;
+        justify-content : center;
+        gap             : 4px;
+        background-color: #7289d9;
+        color           : white;
+        cursor          : pointer;
+
+        &:hover {
+            background-color: #677bc4;
+            box-shadow      : 0 8px 24px 0 rgba(16, 39, 112, .2);
+        }
+    }
+
+    >.message-box {
+        display: flex;
+        gap    : 20px;
+
+        >img {
+            width        : 40px;
+            height       : 40px;
+            border-radius: 20px;
+        }
+
+        >.container {
+            flex-grow: 1;
+            min-width: 0;
+
+            >h1 {
+                color      : #da004e;
+                font-family: 'gg sans SemiBold', sans-serif;
+            }
+
+            >.list-wrapper {
+                background-color: #2b2d31;
+                margin-top      : 8px;
+                border-left     : 4px solid #2ad130;
+                border-radius   : 4px;
+                padding         : 20px 12px;
+                max-width       : 400px;
+
+                >h2 {
+                    font-family: 'gg sans SemiBold', sans-serif;
+                    color      : #fff;
+                }
+
+                >ul {
+                    display       : flex;
+                    flex-direction: column;
+                    gap           : 8px;
+                    margin-top    : 12px;
+
+                    >li {
+                        border       : 1px solid #595b5f;
+                        padding      : 4px 6px;
+                        border-radius: 10px;
+                        font-size    : 14px;
+                        display      : flex;
+                        align-items  : center;
+                        gap          : 4px;
+
+                        >.check {
+                            width           : 16px;
+                            height          : 16px;
+                            background-color: #84b060;
+                            border-radius   : 2px;
+                            display         : flex;
+                            align-items     : center;
+                            justify-content : center;
+                        }
+
+                        >.content {
+                            flex-grow    : 1;
+                            white-space  : nowrap;
+                            text-overflow: ellipsis;
+                            overflow     : hidden;
+                        }
+
+                        >.remove-button {
+                            width          : 16px;
+                            height         : 16px;
+                            border-radius  : 2px;
+                            display        : flex;
+                            align-items    : center;
+                            justify-content: center;
+                            color          : #df4f4a;
+                            cursor         : pointer;
+                        }
+                    }
+                }
+
+                >.empty-message {
+                    color    : #959ba3;
+                    font-size: 14px;
+                }
+
+                >.action-button {
+                    display         : inline-block;
+                    background-color: #5a65ea;
+                    border-radius   : 4px;
+                    padding         : 6px 16px;
+                    cursor          : pointer;
+                    font-family     : 'gg sans SemiBold', sans-serif;
+                    font-size       : 14px;
+                    margin-top      : 12px;
+                    transition      : all 100ms linear;
+
+                    &:hover {
+                        background-color: #4952bd;
+                        box-shadow      : 0 8px 24px 0 rgba(16, 39, 112, .2);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -7,8 +7,8 @@
     Remove all the styles of the "User-Agent-Stylesheet", except for the 'display' property
     - The "symbol *" part is to solve Firefox SVG sprite bug
  */
- *:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
-    all: unset;
+*:where(:not(html, iframe, canvas, img, svg, video, audio):not(svg *, symbol *)) {
+    all    : unset;
     display: revert;
 }
 
@@ -20,19 +20,22 @@
 }
 
 /* Reapply the pointer cursor for anchor tags */
-a, button {
+a,
+button {
     cursor: revert;
 }
 
 /* Remove list styles (bullets/numbers) */
-ol, ul, menu {
+ol,
+ul,
+menu {
     list-style: none;
 }
 
 /* For images to not be able to exceed their container */
 img {
     max-inline-size: 100%;
-    max-block-size: 100%;
+    max-block-size : 100%;
 }
 
 /* removes spacing between cells in tables */
@@ -41,7 +44,8 @@ table {
 }
 
 /* Safari - solving issue when using user-select:none on the <body> text input doesn't working */
-input, textarea {
+input,
+textarea {
     -webkit-user-select: auto;
 }
 
@@ -53,7 +57,7 @@ textarea {
 /* minimum style to allow to style meter element */
 meter {
     -webkit-appearance: revert;
-    appearance: revert;
+    appearance        : revert;
 }
 
 /* preformatted text - use only for this feature */
@@ -81,10 +85,10 @@ meter {
    - fix for the content editable attribute will work properly.
    - webkit-user-select: auto; added for Safari in case of using user-select:none on wrapper element*/
 :where([contenteditable]:not([contenteditable="false"])) {
-    -moz-user-modify: read-write;
+    -moz-user-modify   : read-write;
     -webkit-user-modify: read-write;
-    overflow-wrap: break-word;
-    -webkit-line-break: after-white-space;
+    overflow-wrap      : break-word;
+    -webkit-line-break : after-white-space;
     -webkit-user-select: auto;
 }
 
@@ -152,6 +156,141 @@ meter {
 .page-footer.component a:hover {
   text-decoration: underline;
 }
+@keyframes loader-top {
+  0% {
+    top: -10px;
+  }
+  20% {
+    top: 100%;
+    left: -10px;
+  }
+  40% {
+    left: 100%;
+    top: 100%;
+    transform: rotate(180deg);
+  }
+  60% {
+    top: -10px;
+    left: 100%;
+  }
+  80% {
+    top: -10px;
+    transform: rotate(360deg);
+  }
+  100% {
+    left: -10px;
+  }
+}
+@keyframes loader-bottom {
+  0% {
+    bottom: -10px;
+  }
+  20% {
+    bottom: 100%;
+    right: -10px;
+  }
+  40% {
+    right: 100%;
+    bottom: 100%;
+    transform: rotate(180deg);
+  }
+  60% {
+    bottom: -10px;
+    right: 100%;
+  }
+  80% {
+    bottom: -10px;
+    transform: rotate(360deg);
+  }
+  100% {
+    right: -10px;
+  }
+}
+@keyframes loader-scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.loader.component {
+  padding: 10px;
+}
+.loader.component > .spinner {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  animation: loader-scale ease 1.4s infinite;
+}
+.loader.component > .spinner::before {
+  content: '';
+  position: absolute;
+  width: 7.5px;
+  height: 7.5px;
+  background: #7289da;
+  top: -5px;
+  left: -5px;
+  animation: loader-top ease 3s infinite;
+}
+.loader.component > .spinner::after {
+  content: '';
+  position: absolute;
+  width: 7.5px;
+  height: 7.5px;
+  background: #7289da;
+  bottom: -5px;
+  right: -5px;
+  animation: loader-bottom ease 3s infinite;
+}
+.popup-background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999999;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  padding: 20px 0;
+}
+.confirm.component {
+  max-width: 440px;
+  width: 90%;
+  margin: auto;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background-color: #313338;
+}
+.confirm.component > h1 {
+  padding: 16px;
+  font-size: 20px;
+  font-family: 'gg sans SemiBold', sans-serif;
+  color: #fff;
+}
+.confirm.component > p {
+  padding: 0 16px 16px;
+}
+.confirm.component > footer {
+  background-color: #2b2d31;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+.confirm.component > footer > button {
+  padding: 12px 18px;
+  cursor: pointer;
+  font-family: 'gg sans SemiBold', sans-serif;
+  border-radius: 4px;
+}
 .layout {
   background-color: #313338;
 }
@@ -200,5 +339,115 @@ meter {
   .layout > footer > .container {
     width: 100%;
   }
+}
+.home-view {
+  padding: 20px 0;
+}
+.home-view > .discord-login-button {
+  margin-top: 8px;
+  border-radius: 4px;
+  height: 44px;
+  max-width: 420px;
+  font-size: 14px;
+  transition: all 200ms linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background-color: #7289d9;
+  color: white;
+  cursor: pointer;
+}
+.home-view > .discord-login-button:hover {
+  background-color: #677bc4;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+}
+.home-view > .message-box {
+  display: flex;
+  gap: 20px;
+}
+.home-view > .message-box > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+}
+.home-view > .message-box > .container {
+  flex-grow: 1;
+  min-width: 0;
+}
+.home-view > .message-box > .container > h1 {
+  color: #da004e;
+  font-family: 'gg sans SemiBold', sans-serif;
+}
+.home-view > .message-box > .container > .list-wrapper {
+  background-color: #2b2d31;
+  margin-top: 8px;
+  border-left: 4px solid #2ad130;
+  border-radius: 4px;
+  padding: 20px 12px;
+  max-width: 400px;
+}
+.home-view > .message-box > .container > .list-wrapper > h2 {
+  font-family: 'gg sans SemiBold', sans-serif;
+  color: #fff;
+}
+.home-view > .message-box > .container > .list-wrapper > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+.home-view > .message-box > .container > .list-wrapper > ul > li {
+  border: 1px solid #595b5f;
+  padding: 4px 6px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.home-view > .message-box > .container > .list-wrapper > ul > li > .check {
+  width: 16px;
+  height: 16px;
+  background-color: #84b060;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-view > .message-box > .container > .list-wrapper > ul > li > .content {
+  flex-grow: 1;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.home-view > .message-box > .container > .list-wrapper > ul > li > .remove-button {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #df4f4a;
+  cursor: pointer;
+}
+.home-view > .message-box > .container > .list-wrapper > .empty-message {
+  color: #959ba3;
+  font-size: 14px;
+}
+.home-view > .message-box > .container > .list-wrapper > .action-button {
+  display: inline-block;
+  background-color: #5a65ea;
+  border-radius: 4px;
+  padding: 6px 16px;
+  cursor: pointer;
+  font-family: 'gg sans SemiBold', sans-serif;
+  font-size: 14px;
+  margin-top: 12px;
+  transition: all 100ms linear;
+}
+.home-view > .message-box > .container > .list-wrapper > .action-button:hover {
+  background-color: #4952bd;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
 }
 
