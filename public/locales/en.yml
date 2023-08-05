@@ -1,0 +1,13 @@
+discord-login-message: Please first perform Discord login.
+discord-login-button: Login with Discord
+no-wallet-address-message: No linked wallet address found. Please add your wallet address to check your assets.
+remove-wallet-address-confirm-title: Wallet Address Removal
+remove-wallet-address-confirm-message: Are you sure you want to remove your wallet address?
+remove-wallet-address-confirm-cancel-button: Cancel
+remove-wallet-address-confirm-remove-button: Remove
+wallet-list-title: Wallet List
+add-wallet-address-button: Add Wallet Address
+asset-list-title: Asset List
+asset-list-trade-button: Trade
+role-list-title: Role List
+empty-list-message: No items found.
