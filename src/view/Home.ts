@@ -8,17 +8,52 @@ import {
   w3mProvider,
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/html";
-import { configureChains, createConfig } from "@wagmi/core";
-import { arbitrum, mainnet, polygon } from "@wagmi/core/chains";
+import {
+  configureChains,
+  createConfig,
+  getAccount,
+  signMessage,
+  watchAccount,
+} from "@wagmi/core";
+import { mainnet } from "@wagmi/core/chains";
 
 export default class Home extends View {
   private container: DomNode;
+  private web3modal: Web3Modal;
+  private waitingWalletConnect: boolean = false;
+  private unwatchAccount: () => void;
 
   constructor() {
     super();
     Layout.append(
       this.container = el(".home-view"),
     );
+
+    const chains = [mainnet];
+
+    const { publicClient } = configureChains(chains, [
+      w3mProvider({ projectId: Config.walletConnectProjectID }),
+    ]);
+    const wagmiConfig = createConfig({
+      autoConnect: true,
+      connectors: w3mConnectors({
+        projectId: Config.walletConnectProjectID,
+        chains,
+      }),
+      publicClient,
+    });
+    const ethereumClient = new EthereumClient(wagmiConfig, chains);
+    this.web3modal = new Web3Modal({
+      projectId: Config.walletConnectProjectID,
+    }, ethereumClient);
+
+    this.unwatchAccount = watchAccount((account) => {
+      if (account.address && this.waitingWalletConnect) {
+        this.waitingWalletConnect = false;
+        this.addWalletAddress();
+      }
+    });
+
     //this.init();
     this.test({
       "id": "939061865504460870",
@@ -88,30 +123,20 @@ export default class Home extends View {
     }
   }
 
+  private async addWalletAddress() {
+    const result = await signMessage({
+      message: "Hello, world!",
+    });
+    console.log(result);
+    this.web3modal.closeModal();
+  }
+
   private test(user: any) {
     user.wallet_addresses = [
       "0x8033cEB86c71EbBF575fF7015FcB8F1689d90aC1",
       "0x8033cEB86c71EbBF575fF7015FcB8F1689d90aC1",
       "0x8033cEB86c71EbBF575fF7015FcB8F1689d90aC1",
     ];
-
-    const chains = [arbitrum, mainnet, polygon];
-
-    const { publicClient } = configureChains(chains, [
-      w3mProvider({ projectId: Config.walletConnectProjectID }),
-    ]);
-    const wagmiConfig = createConfig({
-      autoConnect: true,
-      connectors: w3mConnectors({
-        projectId: Config.walletConnectProjectID,
-        chains,
-      }),
-      publicClient,
-    });
-    const ethereumClient = new EthereumClient(wagmiConfig, chains);
-    const web3modal = new Web3Modal({
-      projectId: Config.walletConnectProjectID,
-    }, ethereumClient);
 
     const walletList = el("ul.list");
     const assetList = el("ul.list");
@@ -132,7 +157,14 @@ export default class Home extends View {
             el("h2", msg("wallet-list-title")),
             walletList,
             el("a.action-button", msg("add-wallet-address-button"), {
-              click: () => web3modal.openModal(),
+              click: async () => {
+                this.web3modal.openModal();
+                if (getAccount().address) {
+                  this.addWalletAddress();
+                } else {
+                  this.waitingWalletConnect = true;
+                }
+              },
             }),
           ),
           el(
@@ -209,6 +241,7 @@ export default class Home extends View {
   }
 
   public close(): void {
+    this.unwatchAccount();
     this.container.delete();
     super.close();
   }
