@@ -394,6 +394,7 @@ meter {
   gap: 4px;
 }
 .home-view > .message-box > .container > .list-wrapper > ul.wallet-list > li > .check {
+  flex-shrink: 0;
   width: 16px;
   height: 16px;
   background-color: #84b060;
@@ -409,6 +410,7 @@ meter {
   overflow: hidden;
 }
 .home-view > .message-box > .container > .list-wrapper > ul.wallet-list > li > .remove-button {
+  flex-shrink: 0;
   width: 16px;
   height: 16px;
   border-radius: 2px;
