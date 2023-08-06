@@ -16,6 +16,7 @@ import {
   Confirm,
   DomNode,
   el,
+  ErrorAlert,
   Loader,
   msg,
   StringUtil,
@@ -69,6 +70,15 @@ export default class Home extends View {
     this.init();
   }
 
+  private showError(error: any) {
+    console.error(error);
+    new ErrorAlert({
+      title: msg("error-alert-title"),
+      message: error.error,
+      confirmTitle: msg("error-alert-button"),
+    });
+  }
+
   private async init() {
     this.container.empty().append(new Loader());
     const code = new URLSearchParams(window.location.search).get("code");
@@ -76,12 +86,13 @@ export default class Home extends View {
     if (!code) {
       this.showDiscordLoginButton();
     } else {
-      const response = await get(`get-discord-access-token?code=${code}`);
+      const response = await get(`get-discord-user-by-code?code=${code}`);
       if (response.status === 200) {
-        this.accessToken = (await response.json()).access_token;
-        this.loadUser();
+        const user = await response.json();
+        this.accessToken = user.accessToken;
+        this.user = user;
       } else {
-        console.error(await response.text());
+        console.error(await response.json());
         this.showDiscordLoginButton();
       }
     }
@@ -109,7 +120,7 @@ export default class Home extends View {
     if (response.status === 200) {
       this.user = await response.json();
     } else {
-      console.error(await response.text());
+      this.showError(await response.json());
       this.showDiscordLoginButton();
     }
   }
@@ -119,7 +130,7 @@ export default class Home extends View {
       `new-nonce?access_token=${this.accessToken}&address=${getAccount().address}`,
     );
     if (nonceResponse.status !== 200) {
-      console.error(await nonceResponse.text());
+      this.showError(await nonceResponse.json());
       this.showDiscordLoginButton();
       this.web3modal.closeModal();
       return;
@@ -136,7 +147,7 @@ export default class Home extends View {
     if (addWalletResponse.status === 200) {
       this.loadUser();
     } else {
-      console.error(await addWalletResponse.text());
+      this.showError(await addWalletResponse.json());
       this.showDiscordLoginButton();
     }
 
@@ -151,7 +162,7 @@ export default class Home extends View {
     if (response.status === 200) {
       this.loadUser();
     } else {
-      console.error(await response.text());
+      this.showError(await response.json());
       this.showDiscordLoginButton();
     }
   }
