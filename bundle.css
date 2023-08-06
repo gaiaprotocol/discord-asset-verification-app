@@ -102,25 +102,25 @@ meter {
     all: revert;
 }
 @font-face {
-  font-family: gg sans;
+  font-family: 'gg sans';
   font-style: normal;
   font-weight: 700;
   src: local('gg sans'), url('https://fonts.cdnfonts.com/s/93931/gg sans Bold.woff') format('woff');
 }
 @font-face {
-  font-family: gg sans normal;
+  font-family: 'gg sans Normal';
   font-style: normal;
   font-weight: 400;
   src: local('gg sans Normal'), url('https://fonts.cdnfonts.com/s/93931/gg sans Regular.woff') format('woff');
 }
 @font-face {
-  font-family: gg sans medium;
+  font-family: 'gg sans Medium';
   font-style: normal;
   font-weight: 500;
   src: local('gg sans Medium'), url('https://fonts.cdnfonts.com/s/93931/gg sans Medium.woff') format('woff');
 }
 @font-face {
-  font-family: gg sans semibold;
+  font-family: 'gg sans SemiBold';
   font-style: normal;
   font-weight: 600;
   src: local('gg sans SemiBold'), url('https://fonts.cdnfonts.com/s/93931/gg sans Semibold.woff') format('woff');
@@ -392,12 +392,14 @@ meter {
   color: #fff;
 }
 .home-view > .message-box > .container > .list-wrapper > ul {
+  margin-top: 12px;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.wallet-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-top: 12px;
 }
-.home-view > .message-box > .container > .list-wrapper > ul > li {
+.home-view > .message-box > .container > .list-wrapper > ul.wallet-list > li {
   border: 1px solid #595b5f;
   padding: 4px 6px;
   border-radius: 10px;
@@ -406,7 +408,7 @@ meter {
   align-items: center;
   gap: 4px;
 }
-.home-view > .message-box > .container > .list-wrapper > ul > li > .check {
+.home-view > .message-box > .container > .list-wrapper > ul.wallet-list > li > .check {
   width: 16px;
   height: 16px;
   background-color: #84b060;
@@ -415,13 +417,13 @@ meter {
   align-items: center;
   justify-content: center;
 }
-.home-view > .message-box > .container > .list-wrapper > ul > li > .content {
+.home-view > .message-box > .container > .list-wrapper > ul.wallet-list > li > .address {
   flex-grow: 1;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.home-view > .message-box > .container > .list-wrapper > ul > li > .remove-button {
+.home-view > .message-box > .container > .list-wrapper > ul.wallet-list > li > .remove-button {
   width: 16px;
   height: 16px;
   border-radius: 2px;
@@ -430,6 +432,57 @@ meter {
   justify-content: center;
   color: #df4f4a;
   cursor: pointer;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.asset-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.asset-list > li {
+  padding: 10px;
+  background-color: #1e1f22;
+  border-radius: 4px;
+  font-size: 14px;
+  min-width: 0;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.asset-list > li > .icon {
+  border-radius: 4px;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.asset-list > li > h3 {
+  font-family: 'gg sans SemiBold', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.asset-list > li > .trade-button {
+  display: block;
+  background-color: #5a65ea;
+  border-radius: 4px;
+  padding: 6px 0;
+  cursor: pointer;
+  font-family: 'gg sans SemiBold', sans-serif;
+  font-size: 14px;
+  margin-top: 12px;
+  transition: all 100ms linear;
+  text-align: center;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.asset-list > li > .trade-button:hover {
+  background-color: #4952bd;
+  box-shadow: 0 8px 24px 0 rgba(16, 39, 112, 0.2);
+}
+.home-view > .message-box > .container > .list-wrapper > ul.role-list > li {
+  border: 1px solid #595b5f;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 4px;
+}
+.home-view > .message-box > .container > .list-wrapper > ul.role-list > li > .color {
+  width: 16px;
+  height: 16px;
+  border-radius: 8px;
 }
 .home-view > .message-box > .container > .list-wrapper > .empty-message {
   color: #959ba3;
