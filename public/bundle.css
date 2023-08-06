@@ -128,7 +128,7 @@ meter {
 :root {
   background-color: #2b2d31;
   color: #f2f3f5;
-  font-family: 'gg sans Normal', sans-serif;
+  font-family: 'gg sans', sans-serif;
 }
 .topbar.component {
   height: 72px;
@@ -272,7 +272,7 @@ meter {
 .confirm.component > h1 {
   padding: 16px;
   font-size: 20px;
-  font-family: 'gg sans SemiBold', sans-serif;
+  font-weight: 600;
   color: #fff;
 }
 .confirm.component > p {
@@ -288,7 +288,7 @@ meter {
 .confirm.component > footer > button {
   padding: 12px 18px;
   cursor: pointer;
-  font-family: 'gg sans SemiBold', sans-serif;
+  font-weight: 600;
   border-radius: 4px;
 }
 .layout {
@@ -377,7 +377,7 @@ meter {
 }
 .home-view > .message-box > .container > h1 {
   color: #da004e;
-  font-family: 'gg sans SemiBold', sans-serif;
+  font-weight: 600;
 }
 .home-view > .message-box > .container > .list-wrapper {
   background-color: #2b2d31;
@@ -388,8 +388,8 @@ meter {
   max-width: 400px;
 }
 .home-view > .message-box > .container > .list-wrapper > h2 {
-  font-family: 'gg sans SemiBold', sans-serif;
   color: #fff;
+  font-weight: 600;
 }
 .home-view > .message-box > .container > .list-wrapper > ul {
   margin-top: 12px;
@@ -449,9 +449,9 @@ meter {
   border-radius: 4px;
 }
 .home-view > .message-box > .container > .list-wrapper > ul.asset-list > li > h3 {
-  font-family: 'gg sans SemiBold', sans-serif;
   white-space: nowrap;
   overflow: hidden;
+  font-weight: 600;
 }
 .home-view > .message-box > .container > .list-wrapper > ul.asset-list > li > .trade-button {
   display: block;
@@ -459,8 +459,8 @@ meter {
   border-radius: 4px;
   padding: 6px 0;
   cursor: pointer;
-  font-family: 'gg sans SemiBold', sans-serif;
   font-size: 14px;
+  font-weight: 600;
   margin-top: 12px;
   transition: all 100ms linear;
   text-align: center;
@@ -478,6 +478,7 @@ meter {
   align-items: center;
   gap: 4px;
   margin-right: 4px;
+  margin-bottom: 4px;
 }
 .home-view > .message-box > .container > .list-wrapper > ul.role-list > li > .color {
   width: 16px;
@@ -494,8 +495,8 @@ meter {
   border-radius: 4px;
   padding: 6px 16px;
   cursor: pointer;
-  font-family: 'gg sans SemiBold', sans-serif;
   font-size: 14px;
+  font-weight: 600;
   margin-top: 12px;
   transition: all 100ms linear;
 }

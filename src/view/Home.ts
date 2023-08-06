@@ -5,7 +5,6 @@ import {
   signMessage,
   watchAccount,
 } from "@wagmi/core";
-import { ethers } from "ethers";
 import { mainnet } from "@wagmi/core/chains";
 import {
   EthereumClient,
@@ -22,14 +21,17 @@ import {
   StringUtil,
   View,
 } from "common-dapp-module";
-import { get } from "../_shared/edgeFunctionFetch.js";
+import { ethers } from "ethers";
 import Config from "../Config.js";
-import Layout from "./Layout.js";
 import assets from "../_shared/assets.js";
+import { get, post } from "../_shared/edgeFunctionFetch.js";
+import Layout from "./Layout.js";
 
 export default class Home extends View {
   private container: DomNode;
   private web3modal: Web3Modal;
+
+  private accessToken: string = "";
   private waitingWalletConnect: boolean = false;
   private unwatchAccount: () => void;
 
@@ -64,29 +66,11 @@ export default class Home extends View {
       }
     });
 
-    //this.init();
-
-    //test
-    this.user = {
-      id: "1234567890",
-      nickname: "Test User",
-      avatar: "https://cdn.discordapp.com/embed/avatars/0.png",
-      walletAddresses: ["0x1234567890"],
-      assets: [{
-        chain: "ethereum",
-        address: "0xeACB1E79425236dAcd5Df3D0bd3F73e3dc6fb11e",
-        balance: "100000000000000000000",
-      }, {
-        chain: "ethereum",
-        address: "0x134590ACB661Da2B318BcdE6b39eF5cF8208E372",
-        balance: "12",
-      }],
-      roles: [{ name: "Test Role", color: 0 }],
-    };
+    this.init();
   }
 
   private async init() {
-    this.showLoader();
+    this.container.empty().append(new Loader());
     const code = new URLSearchParams(window.location.search).get("code");
 
     if (!code) {
@@ -94,17 +78,13 @@ export default class Home extends View {
     } else {
       const response = await get(`get-discord-access-token?code=${code}`);
       if (response.status === 200) {
-        const accessToken = (await response.json()).access_token;
-        this.loadUser(accessToken);
+        this.accessToken = (await response.json()).access_token;
+        this.loadUser();
       } else {
         console.error(await response.text());
         this.showDiscordLoginButton();
       }
     }
-  }
-
-  private showLoader() {
-    this.container.empty().append(new Loader());
   }
 
   private showDiscordLoginButton() {
@@ -121,8 +101,11 @@ export default class Home extends View {
     );
   }
 
-  private async loadUser(accessToken: string) {
-    const response = await get(`get-discord-user?access_token=${accessToken}`);
+  private async loadUser() {
+    this.container.empty().append(new Loader());
+    const response = await get(
+      `get-discord-user?access_token=${this.accessToken}`,
+    );
     if (response.status === 200) {
       this.user = await response.json();
     } else {
@@ -132,11 +115,45 @@ export default class Home extends View {
   }
 
   private async addWalletAddress() {
-    const result = await signMessage({
-      message: "Hello, world!",
+    const nonceResponse = await get(
+      `new-nonce?access_token=${this.accessToken}&address=${getAccount().address}`,
+    );
+    if (nonceResponse.status !== 200) {
+      console.error(await nonceResponse.text());
+      this.showDiscordLoginButton();
+      this.web3modal.closeModal();
+      return;
+    }
+
+    const nonceData = await nonceResponse.json();
+    const signedMessage = await signMessage({
+      message: `Sign in to Gaia Protocol\nNonce: ${nonceData.nonce}`,
     });
-    console.log(result);
+    const addWalletResponse = await post("add-wallet-address", {
+      accessToken: this.accessToken,
+      signedMessage,
+    });
+    if (addWalletResponse.status === 200) {
+      this.loadUser();
+    } else {
+      console.error(await addWalletResponse.text());
+      this.showDiscordLoginButton();
+    }
+
     this.web3modal.closeModal();
+  }
+
+  private async removeWalletAddress(address: string) {
+    const response = await post("remove-wallet-address", {
+      accessToken: this.accessToken,
+      address,
+    });
+    if (response.status === 200) {
+      this.loadUser();
+    } else {
+      console.error(await response.text());
+      this.showDiscordLoginButton();
+    }
   }
 
   private set user(user: {
@@ -209,8 +226,8 @@ export default class Home extends View {
                     "remove-wallet-address-confirm-remove-button",
                   ),
                   confirmColor: "#c94543",
-                }, () => {
-                  // TODO
+                }, async () => {
+                  await this.removeWalletAddress(walletAddress);
                 });
               },
             }),
@@ -225,32 +242,28 @@ export default class Home extends View {
       walletList.delete();
     }
 
-    if (user.assets && user.assets.length > 0) {
-      for (const asset of user.assets) {
-        const assetInfo = assets[`${asset.chain}-${asset.address}`];
-        assetList.append(
+    for (const asset of assets) {
+      const balance = user.assets?.find((a) =>
+        a.chain === asset.chain && a.address === asset.address
+      )?.balance ?? "0";
+
+      assetList.append(
+        el(
+          "li",
+          el("img.icon", { src: asset.icon }),
+          el("h3.name", asset.name),
           el(
-            "li",
-            el("img.icon", { src: assetInfo.icon }),
-            el("h3.name", assetInfo.name),
-            el(
-              ".balance",
-              "x" + StringUtil.numberWithCommas(
-                ethers.formatUnits(asset.balance, assetInfo.decimals ?? 0),
-              ),
+            ".balance",
+            "x" + StringUtil.numberWithCommas(
+              ethers.formatUnits(balance, asset.decimals ?? 0),
             ),
-            el("a.trade-button", msg("asset-list-trade-button"), {
-              href: assetInfo.tradeURL,
-              target: "_blank",
-            }),
           ),
-        );
-      }
-    } else {
-      assetList.parent?.append(
-        el("p.empty-message", msg("empty-list-message")),
+          el("a.trade-button", msg("asset-list-trade-button"), {
+            href: asset.tradeURL,
+            target: "_blank",
+          }),
+        ),
       );
-      assetList.delete();
     }
 
     if (user.roles && user.roles.length > 0) {

@@ -11,7 +11,7 @@ export const get = async (uri: string) => {
   );
 };
 
-export const post = async (uri: string) => {
+export const post = async (uri: string, body: any) => {
   return await fetch(
     `${Config.supabaseURL}/functions/v1/${uri}`,
     {
@@ -19,6 +19,7 @@ export const post = async (uri: string) => {
       headers: {
         Authorization: `Bearer ${Config.supabaseAnonKey}`,
       },
+      body: JSON.stringify(body),
     },
   );
 };
