@@ -38,7 +38,7 @@
 
             >h1 {
                 color      : #da004e;
-                font-weight: 600;
+                font-weight: bold;
             }
 
             >.list-wrapper {
@@ -51,7 +51,7 @@
 
                 >h2 {
                     color      : #fff;
-                    font-weight: 600;
+                    font-weight: bold;
                 }
 
                 >ul {
@@ -106,6 +106,10 @@
                         grid-template-columns: repeat(3, 1fr);
                         gap                  : 12px;
 
+                        @media @phone {
+                            grid-template-columns: repeat(2, 1fr);
+                        }
+
                         >li {
                             padding         : 10px;
                             background-color: #1e1f22;
@@ -120,7 +124,7 @@
                             >h3 {
                                 white-space: nowrap;
                                 overflow   : hidden;
-                                font-weight: 600;
+                                font-weight: bold;
                             }
 
                             >.trade-button {
@@ -130,7 +134,7 @@
                                 padding         : 6px 0;
                                 cursor          : pointer;
                                 font-size       : 14px;
-                                font-weight     : 600;
+                                font-weight     : bold;
                                 margin-top      : 12px;
                                 transition      : all 100ms linear;
                                 text-align      : center;
@@ -176,7 +180,7 @@
                     padding         : 6px 16px;
                     cursor          : pointer;
                     font-size       : 14px;
-                    font-weight     : 600;
+                    font-weight     : bold;
                     margin-top      : 12px;
                     transition      : all 100ms linear;
 
