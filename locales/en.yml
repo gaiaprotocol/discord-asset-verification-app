@@ -11,3 +11,5 @@ asset-list-title: Asset List
 asset-list-trade-button: Trade
 role-list-title: Role List
 empty-list-message: No items found.
+error-alert-title: Error
+error-alert-button: OK
