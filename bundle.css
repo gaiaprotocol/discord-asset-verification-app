@@ -102,25 +102,25 @@ meter {
     all: revert;
 }
 @font-face {
-  font-family: 'gg sans';
+  font-family: gg sans;
   font-style: normal;
   font-weight: 700;
   src: local('gg sans'), url('https://fonts.cdnfonts.com/s/93931/gg sans Bold.woff') format('woff');
 }
 @font-face {
-  font-family: 'gg sans Normal';
+  font-family: gg sans normal;
   font-style: normal;
   font-weight: 400;
   src: local('gg sans Normal'), url('https://fonts.cdnfonts.com/s/93931/gg sans Regular.woff') format('woff');
 }
 @font-face {
-  font-family: 'gg sans Medium';
+  font-family: gg sans medium;
   font-style: normal;
   font-weight: 500;
   src: local('gg sans Medium'), url('https://fonts.cdnfonts.com/s/93931/gg sans Medium.woff') format('woff');
 }
 @font-face {
-  font-family: 'gg sans SemiBold';
+  font-family: gg sans semibold;
   font-style: normal;
   font-weight: 600;
   src: local('gg sans SemiBold'), url('https://fonts.cdnfonts.com/s/93931/gg sans Semibold.woff') format('woff');
@@ -478,6 +478,7 @@ meter {
   align-items: center;
   gap: 4px;
   margin-right: 4px;
+  margin-bottom: 4px;
 }
 .home-view > .message-box > .container > .list-wrapper > ul.role-list > li > .color {
   width: 16px;
